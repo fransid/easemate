@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercice CM1 - Sid KHALIFA</title>
+    <style>
+        body { background-color: #fce4ec; color: #1a237e; font-family: 'Segoe UI', sans-serif; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .logo { text-align: center; font-size: 24px; font-weight: bold; color: #1a237e; border-bottom: 3px solid #1a237e; padding-bottom: 10px; margin-bottom: 20px; }
+        .question { margin-bottom: 15px; padding: 10px; border-left: 5px solid #1a237e; background: #e8eaf6; }
+        input { padding: 5px; border: 2px solid #1a237e; border-radius: 5px; }
+        .correct { background-color: #c8e6c9 !important; border-color: #2e7d32 !important; }
+        .wrong { background-color: #ffcdd2 !important; border-color: #c62828 !important; }
+        button { background: #1a237e; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; }
+        #explications { display: none; margin-top: 20px; padding: 15px; background: #e1f5fe; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="logo">Exercice CM1 par Sid KHALIFA</div>
+    <div id="quiz"></div>
+    <button onclick="verifier()">Valider mes réponses</button>
+    <button onclick="toggleExplications()">Afficher la correction détaillée</button>
+    <button onclick="telecharger()">Télécharger cet exercice</button>
+    <div id="explications"></div>
+</div>
+
+<script>
+    const questions = [
+        {q: "Quel est le chiffre des dizaines dans 452 ?", a: "5"},
+        {q: "Écrivez en chiffres : trois-mille-quatre-vingt-dix", a: "3090"},
+        {q: "Quel est le nombre qui suit 999 ?", a: "1000"},
+        {q: "Combien font 100 + 250 ?", a: "350"},
+        {q: "Quel est le plus grand entre 502 et 520 ?", a: "520"},
+        {q: "Décomposez 123 : 100 + 20 + ...", a: "3"},
+        {q: "Quel est le chiffre des unités dans 876 ?", a: "6"},
+        {q: "Combien font 50 x 2 ?", a: "100"},
+        {q: "Quel est le nombre juste avant 500 ?", a: "499"},
+        {q: "Écrivez 5000 en lettres (sans tiret) ?", a: "cinq mille"},
+        {q: "Conjuguez 'Manger' au présent avec 'Nous' : Nous ...", a: "mangeons"},
+        {q: "Conjuguez 'Être' au présent avec 'Ils' : Ils ...", a: "sont"},
+        {q: "Conjuguez 'Avoir' au présent avec 'Tu' : Tu ...", a: "as"},
+        {q: "Conjuguez 'Finir' au présent avec 'Je' : Je ...", a: "finis"},
+        {q: "Conjuguez 'Aller' au présent avec 'Elle' : Elle ...", a: "va"},
+        {q: "Conjuguez 'Faire' au présent avec 'Vous' : Vous ...", a: "faites"},
+        {q: "Conjuguez 'Dire' au présent avec 'Nous' : Nous ...", a: "disons"},
+        {q: "Conjuguez 'Venir' au présent avec 'Je' : Je ...", a: "viens"},
+        {q: "Conjuguez 'Prendre' au présent avec 'Ils' : Ils ...", a: "prennent"},
+        {q: "Conjuguez 'Voir' au présent avec 'Tu' : Tu ...", a: "vois"},
+        {q: "Dans 'Le chat mange la souris', quel est le sujet ?", a: "Le chat"},
+        {q: "Dans 'Le chat mange la souris', quel est le verbe ?", a: "mange"},
+        {q: "Dans 'Le chat mange la souris', quel est le COD ?", a: "la souris"},
+        {q: "Quelle est la nature du mot 'chat' ?", a: "nom"},
+        {q: "Quelle est la nature du mot 'mange' ?", a: "verbe"},
+        {q: "Dans 'Il court vite', quel est l'adverbe ?", a: "vite"},
+        {q: "Quel est le sujet dans 'Demain, nous irons au parc' ?", a: "nous"},
+        {q: "Quelle est la fonction de 'au parc' ?", a: "complément"},
+        {q: "Dans 'La petite fille rit', quel est l'adjectif ?", a: "petite"},
+        {q: "Quel est le verbe dans 'Les oiseaux chantent' ?", a: "chantent"}
+    ];
+
+    const quizDiv = document.getElementById('quiz');
+    questions.forEach((item, index) => {
+        quizDiv.innerHTML += `<div class="question">${index+1}. ${item.q} <input type="text" id="q${index}"></div>`;
+    });
+
+    function verifier() {
+        questions.forEach((item, index) => {
+            let input = document.getElementById('q' + index);
+            if(input.value.toLowerCase().trim() === item.a.toLowerCase()) {
+                input.className = 'correct';
+            } else {
+                input.className = 'wrong';
+            }
+        });
+    }
+
+    function toggleExplications() {
+        let div = document.getElementById('explications');
+        div.style.display = (div.style.display === 'block') ? 'none' : 'block';
+        div.innerHTML = "<strong>Correction :</strong><br>" + questions.map((q, i) => `${i+1}: ${q.a}`).join('<br>');
+    }
+
+    function telecharger() {
+        const blob = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'exercice_cm1.html';
+        a.click();
+    }
+</script>
+
+</body>
+</html>
